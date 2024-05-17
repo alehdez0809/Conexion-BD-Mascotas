@@ -1,8 +1,8 @@
-MYSQLHOST= 'viaduct.proxy.rlwy.net' 
-MYSQLPASSWORD= 'ETIHuTaULQMlxhKFVFniiHbWuaeMlZQO' 
-MYSQLPORT= '27509' 
-MYSQLUSER= 'root'
-MYSQL_DATABASE= 'railway' 
+const MYSQLHOST= 'viaduct.proxy.rlwy.net' 
+const MYSQLPASSWORD= 'ETIHuTaULQMlxhKFVFniiHbWuaeMlZQO' 
+const MYSQLPORT= '27509' 
+const MYSQLUSER= 'root'
+const MYSQL_DATABASE= 'railway' 
 
 export const metodos = {
     MYSQLHOST,
