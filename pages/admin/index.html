@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Adopción</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="app.js" defer></script>
+    <script src="admin.js" defer></script>
+    <style>
+        .body1{
+            justify-content: center;
+            align-items: center;
+            min-height: 100svh;
+        }
+    </style>
+</head>
+<body class="body1">
+
+    <header>
+        <h1>Centro de adopción</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Agregar una nueva mascota</h2>
+            <form action="/agregarMascota" method="post">
+                <div>
+                    <label for="nombre">Nombre de la mascota:</label>
+                    <br>
+                    <input type="text" name="nombre" id="nombre" placeholder="Nombre de la mascota" required>
+                </div>
+                <div>
+                    <label for="edad">Edad de la mascota:</label>
+                    <br>
+                    <input type="number" name="edad" id="edad" placeholder="Edad de la mascota" required min="0" max="25" step="1">
+                </div>
+                <div>
+                    <label for="especie">Especie:</label>
+                    <br>
+                    <select name="especie" id="especie">
+                        <option value="1">Perro</option>
+                        <option value="2">Gato</option>
+                        <option value="3">Cuyo</option>
+                        <option value="4">Pez</option>
+                        <option value="5">Ave</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="estado">Estado:</label>
+                    <br>
+                    <select name="estado" id="estado">
+                        <option value="1">Adoptado</option>
+                        <option value="2">No adoptado</option>
+                    </select>    
+                </div>
+                <input type="submit" value="Agregar Mascota">
+            </form>
+        </section>
+
+        <section>
+            <h2>Gestión de mascotas</h2>
+            <nav>
+                <a href="/actualizarMascota"><button>Actualizar información</button></a>
+                <a href="/eliminarMascota"><button>Eliminar mascota</button></a>
+                <a href="/obtenerMascota"><button>Ver Mascotas</button></a>
+            </nav>
+        </section>
+        <br>
+        <button id="logout">Cerrar sesión</button>
+    </main>
+
+
+</body>
+</html>
