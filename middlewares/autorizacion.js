@@ -27,7 +27,7 @@ async function revisarCookie(req){
         const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
         const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET);
         console.log(decodificada);
-        const response = await fetch("https://conexion-bd-mascotas.vercel.app/api/obtenerUsuarios"); 
+        const response = await fetch("https://conexion-bd-mascotas.vercel.app//api/obtenerUsuarios"); 
         const usuarios = await response.json();
         const correoARevisar = usuarios.find(usuario => usuario.correo_usuario === decodificada.correo);
         if(!correoARevisar){

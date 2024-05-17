@@ -11,7 +11,7 @@ async function login(req, res){
     if(!correo || !contrasena){
         return res.status(400).send({status: "Error", message: "Los campos están incompletos"});
     }else{
-        const response = await fetch("https://conexion-bd-mascotas.vercel.app/api/obtenerUsuarios"); 
+        const response = await fetch("https://conexion-bd-mascotas.vercel.app//api/obtenerUsuarios"); 
         const usuarios = await response.json();
         const correoARevisar = usuarios.find(usuario => usuario.correo_usuario === correo);
         if(!correoARevisar){
@@ -49,7 +49,7 @@ async function registro(req, res){
     if(!nombre || !apellidoP || !apellidoM || !correo || !contrasena){
         return res.status(400).send({status: "Error", message: "Los campos están incompletos"});
     }else{
-        const response = await fetch("https://conexion-bd-mascotas.vercel.app/api/obtenerUsuarios"); 
+        const response = await fetch("https://conexion-bd-mascotas.vercel.app//api/obtenerUsuarios"); 
         const usuarios = await response.json();
         const correoARevisar = usuarios.some(usuario => usuario.correo_usuario === correo);
         if(correoARevisar){
@@ -65,7 +65,7 @@ async function registro(req, res){
                 contrasena: hashContrasena
             }
             console.log(nuevoUsuario);
-            const respuesta = await fetch("https://conexion-bd-mascotas.vercel.app/api/registrarUsuario", {
+            const respuesta = await fetch("https://conexion-bd-mascotas.vercel.app//api/registrarUsuario", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

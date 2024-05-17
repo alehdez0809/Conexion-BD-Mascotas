@@ -5,7 +5,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) =>{
     const correo = e.target.children.correo.value;
     const contrasena = e.target.children.contrasena.value;
 
-    const res = await fetch("https://conexion-bd-mascotas.vercel.app/api/login", {
+    const res = await fetch("https://conexion-bd-mascotas.vercel.app//api/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

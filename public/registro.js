@@ -3,7 +3,7 @@ const mensajeError = document.getElementsByClassName("error")[0];
 document.getElementById("registro-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     console.log(e.target.children.correo.value);
-    const res = await fetch("https://conexion-bd-mascotas.vercel.app/api/registro", {
+    const res = await fetch("https://conexion-bd-mascotas.vercel.app/api//registro", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
