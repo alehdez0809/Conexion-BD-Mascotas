@@ -12,13 +12,14 @@ var app = express();
 let mascotasHTML;
 
 import bodyParser from 'body-parser';
+import { metodos } from './config.js';
 
 var con = mysql.createConnection({
-    host: process.env.MYSQLHOST,
-    user: process.env.MYSQLUSER,
-    password: process.env.MYSQLPASSWORD,
-    database: process.env.MYSQLDATABASE,
-    port: process.env.MYSQLPORT
+    host: metodos.MYSQLHOST,
+    user: metodos.MYSQLUSER,
+    password: metodos.MYSQLPASSWORD,
+    database: metodos.MYSQL_DATABASE,
+    port: metodos.MYSQLPORT
 
 });
 
