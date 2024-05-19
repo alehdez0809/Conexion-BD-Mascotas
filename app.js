@@ -187,7 +187,7 @@ app.get('/obtenerMascota', autorizacion.soloAdmin ,(req, res) => {
 });
 
 
-app.get('/actualizarMascota', autorizacion.soloAdmin, (req, res) => {
+app.get('/actualizarMascota', autorizacion.soloAdmin ,(req, res) => {
     con.query('SELECT * FROM mascota', (err, mascotas) => {
         if (err) {
             console.log('ERROR: ', err);
@@ -203,37 +203,42 @@ app.get('/actualizarMascota', autorizacion.soloAdmin, (req, res) => {
     <link href="/style.css" rel="stylesheet">
     <title>Actualizar Mascota</title>
     <style>
-        .input {
+        .input{
             width: 266px;
         }
-        .form1 {
+        .form1{
             flex-direction: row;
         }
     </style>
     <script>
         function cargarDatosMascota() {
             const mascotaId = document.getElementById('mascota').value;
-            const botonActualizar = document.getElementById('botonActualizar');
-            if (mascotaId !== '') {
-                botonActualizar.setAttribute('disabled', false);
-                fetch('/obtenerDatosMascota?id=' + mascotaId)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('nombre').value = data.nombre;
-                        document.getElementById('edad').value = data.edad;
-                        document.getElementById('especie').value = data.especie;
-                        document.getElementById('estado').value = data.estado;
-                    })
-                    .catch(error => console.error('Error al cargar los datos de la mascota:', error));
+            const posicion = document.getElementById('mascota').selectedIndex;
+            if (posicion === 0) {
+                document.getElementById('nombre').setAttribute('placeholder', 'Nuevo nombre');
+                document.getElementById('nombre').setAttribute('readonly', true);
+                document.getElementById('nombre').value = '';
+                document.getElementById('edad').setAttribute('readonly', true);
+                document.getElementById('edad').value = '';
+                document.getElementById('especie').setAttribute('disabled', true);
+                document.getElementById('estado').setAttribute('disabled', true);
             } else {
-                botonActualizar.setAttribute('disabled', true);
+                document.getElementById('nombre').removeAttribute('readonly');
+                document.getElementById('edad').removeAttribute('readonly');
+                document.getElementById('especie').removeAttribute('disabled');
+                document.getElementById('estado').removeAttribute('disabled');
             }
+            fetch('/obtenerDatosMascota?id=' + mascotaId)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('nombre').value = data.nombre;
+                    document.getElementById('edad').value = data.edad;
+                    document.getElementById('especie').value = data.especie;
+                    document.getElementById('estado').value = data.estado;
+                })
+                .catch(error => console.error('Error al cargar los datos de la mascota:', error));
         }
-
-        window.onload = function() {
-            document.getElementById('botonActualizar').setAttribute('disabled', true);
-            document.getElementById('mascota').addEventListener('change', cargarDatosMascota);
-        }
+        window.onload = cargarDatosMascota();
     </script>
 </head>
 <body>
@@ -241,27 +246,29 @@ app.get('/actualizarMascota', autorizacion.soloAdmin, (req, res) => {
     <p>Selecciona una mascota:</p>
     <form action="/procesarActualizacionMascota" method="post">
         <div class="form1">
-            <select name="id" id="mascota" onchange="cargarDatosMascota()">
-                <option value="">Seleccione una mascota</option>
-                ${opcionesMascotas}
-            </select>
-            <br><br><br>
-            <input type="text" id="nombre" name="nombre" placeholder="Nuevo nombre" required class="input">
-            <input type="number" id="edad" name="edad" placeholder="Nueva edad" required min="0" max="25" step="1">
-            <select id="especie" name="especie">
-                <option value="1">Perro</option>
-                <option value="2">Gato</option>
-                <option value="3">Cuyo</option>
-                <option value="4">Pez</option>
-                <option value="5">Ave</option>
-            </select>
-            <select id="estado" name="estado">
-                <option value="1">Adoptado</option>
-                <option value="2">No adoptado</option>
-            </select>
+        <select name="id" id="mascota" onchange="cargarDatosMascota()">
+            <option value="">Seleccione una mascota</option>
+            ${opcionesMascotas}
+        </select>
+        <br>
+        <br>
+        <br>
+        <input type="text" id="nombre" name="nombre" placeholder="Nuevo nombre" required class="input">
+        <input type="number" id="edad" name="edad" placeholder="Nueva edad" required min="0" max="25" step="1">
+        <select id="especie" name="especie">
+            <option value="1">Perro</option>
+            <option value="2">Gato</option>
+            <option value="3">Cuyo</option>
+            <option value="4">Pez</option>
+            <option value="5">Ave</option>
+        </select>
+        <select id="estado" name="estado">
+            <option value="1">Adoptado</option>
+            <option value="2">No adoptado</option>
+        </select>
         </div>
         <br>
-        <input type="submit" id="botonActualizar" value="Actualizar Mascota">
+        <input type="submit" value="Actualizar Mascota">
     </form>
 </body>
 </html>`);
@@ -303,7 +310,7 @@ app.post('/procesarActualizacionMascota', (req, res) => {
 
 
 
-app.get('/eliminarMascota', autorizacion.soloAdmin, (req, res) => {
+app.get('/eliminarMascota', autorizacion.soloAdmin ,(req, res) => {
     con.query('SELECT * FROM mascota', (err, mascotas) => {
         if (err) {
             console.log('ERROR: ', err);
@@ -318,33 +325,14 @@ app.get('/eliminarMascota', autorizacion.soloAdmin, (req, res) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/style.css" rel="stylesheet">
     <title>Eliminar Mascota</title>
-    <script>
-        function activarBotonEliminar() {
-            const mascotaId = document.getElementById('mascota').value;
-            const botonEliminar = document.getElementById('botonEliminar');
-            if (mascotaId !== '') {
-                botonEliminar.setAttribute("disabled", false);
-            } else {
-                botonEliminar.setAttribute("disabled", true);
-            }
-        }
-
-        window.onload = function() {
-            document.getElementById('botonEliminar').setAttribute("disabled", true);
-            document.getElementById('mascota').addEventListener('change', activarBotonEliminar);
-        }
-    </script>
 </head>
 <body>
     <h1>Eliminar Mascota</h1>
     <form action="/procesarEliminacionMascota" method="post">
         <label for="mascota">Selecciona una mascota para eliminar:</label>
-        <select name="id" id="mascota" onchange="activarBotonEliminar()">
-            <option value="">Seleccione una mascota</option>
-            ${opcionesMascotas}
-        </select>
+        <select name="id" id="mascota">${opcionesMascotas}</select>
         <br>
-        <input type="submit" id="botonEliminar" value="Eliminar Mascota">
+        <input type="submit" value="Eliminar Mascota">
     </form>
 </body>
 </html>`);
