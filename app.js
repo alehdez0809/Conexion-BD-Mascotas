@@ -11,7 +11,7 @@ var app = express();
 
 let mascotasHTML;
 
-import { metodos } from './config.js';
+import { metodos } from "./config.js";
 
 var con = mysql.createConnection({
     host: metodos.MYSQLHOST,
