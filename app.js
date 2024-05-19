@@ -215,7 +215,7 @@ app.get('/actualizarMascota', autorizacion.soloAdmin, (req, res) => {
             const mascotaId = document.getElementById('mascota').value;
             const botonActualizar = document.getElementById('botonActualizar');
             if (mascotaId !== '') {
-                botonActualizar.disabled = false;
+                botonActualizar.setAttribute('disabled', false);
                 fetch('/obtenerDatosMascota?id=' + mascotaId)
                     .then(response => response.json())
                     .then(data => {
@@ -226,12 +226,12 @@ app.get('/actualizarMascota', autorizacion.soloAdmin, (req, res) => {
                     })
                     .catch(error => console.error('Error al cargar los datos de la mascota:', error));
             } else {
-                botonActualizar.disabled = true;
+                botonActualizar.setAttribute('disabled', true);
             }
         }
 
         window.onload = function() {
-            document.getElementById('botonActualizar').disabled = true;
+            document.getElementById('botonActualizar').setAttribute('disabled', true);
             document.getElementById('mascota').addEventListener('change', cargarDatosMascota);
         }
     </script>
@@ -323,14 +323,14 @@ app.get('/eliminarMascota', autorizacion.soloAdmin, (req, res) => {
             const mascotaId = document.getElementById('mascota').value;
             const botonEliminar = document.getElementById('botonEliminar');
             if (mascotaId !== '') {
-                botonEliminar.disabled = false;
+                botonEliminar.setAttribute("disabled", false);
             } else {
-                botonEliminar.disabled = true;
+                botonEliminar.setAttribute("disabled", true);
             }
         }
 
         window.onload = function() {
-            document.getElementById('botonEliminar').disabled = true;
+            document.getElementById('botonEliminar').setAttribute("disabled", true);
             document.getElementById('mascota').addEventListener('change', activarBotonEliminar);
         }
     </script>
