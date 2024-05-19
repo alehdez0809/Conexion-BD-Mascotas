@@ -11,7 +11,6 @@ var app = express();
 
 let mascotasHTML;
 
-import bodyParser from 'body-parser';
 import { metodos } from './config.js';
 
 var con = mysql.createConnection({
