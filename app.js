@@ -214,7 +214,7 @@ app.get('/actualizarMascota', autorizacion.soloAdmin, (req, res) => {
         function cargarDatosMascota() {
             const mascotaId = document.getElementById('mascota').value;
             const botonActualizar = document.getElementById('botonActualizar');
-            if (mascotaId) {
+            if (mascotaId !== 'Seleccione una mascota') {
                 botonActualizar.disabled = false;
                 fetch('/obtenerDatosMascota?id=' + mascotaId)
                     .then(response => response.json())
@@ -321,7 +321,7 @@ app.get('/eliminarMascota', autorizacion.soloAdmin, (req, res) => {
         function activarBotonEliminar() {
             const mascotaId = document.getElementById('mascota').value;
             const botonEliminar = document.getElementById('botonEliminar');
-            if (mascotaId) {
+            if (mascotaId !== 'Seleccione una mascota') {
                 botonEliminar.disabled = false;
             } else {
                 botonEliminar.disabled = true;
