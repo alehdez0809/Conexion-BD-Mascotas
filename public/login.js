@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 const mensajeError = document.getElementsByClassName("error")[0]
 
 document.getElementById("login-form").addEventListener("submit", async (e) =>{

@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 const mensajeError = document.getElementsByClassName("error")[0];
 
 document.getElementById("registro-form").addEventListener("submit", async (e) => {
