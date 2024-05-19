@@ -2,8 +2,8 @@ const mensajeError = document.getElementsByClassName("error")[0]
 
 document.getElementById("login-form").addEventListener("submit", async (e) =>{
     e.preventDefault();
-    const correo = e.target.children.correo.value;
-    const contrasena = e.target.children.contrasena.value;
+    const correo = e.target.elements.correo.value;
+    const contrasena = e.target.elements.contrasena.value;
 
     const res = await fetch("https://conexion-bd-mascotas.vercel.app/api/login", {
         method: "POST",
