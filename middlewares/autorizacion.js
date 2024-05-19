@@ -1,6 +1,8 @@
 import jsonwebtoken from "jsonwebtoken";
 import dotenv from "dotenv";
 
+const JWT_SECRET = 'mi_clave_secreta_token';
+
 dotenv.config();
 
 async function soloAdmin(req, res, next){
@@ -25,7 +27,7 @@ async function revisarCookie(req){
 
     try{
         const cookieJWT = req.headers.cookie.split("; ").find(cookie => cookie.startsWith("jwt=")).slice(4);
-        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET);
+        const decodificada = jsonwebtoken.verify(cookieJWT, JWT_SECRET);
         console.log(decodificada);
         const response = await fetch("https://conexion-bd-mascotas.vercel.app/api/obtenerUsuarios"); 
         const usuarios = await response.json();

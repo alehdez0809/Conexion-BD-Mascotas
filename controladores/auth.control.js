@@ -4,6 +4,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const JWT_SECRET = 'mi_clave_secreta_token';
+const JWT_EXPIRA = '7d';
+const JWT_COOKIE_EXPIRES = 1;
+
 async function login(req, res){
     console.log(req.body);
     const correo = req.body.correo;
@@ -25,11 +29,11 @@ async function login(req, res){
             }else{
                 const token = jsonwebtoken.sign(
                     {correo:correoARevisar.correo_usuario}, 
-                    process.env.JWT_SECRET,
-                    {expiresIn: process.env.JWT_EXPIRA}
+                    JWT_SECRET,
+                    {expiresIn: JWT_EXPIRA}
                 );
                 const cookie = {
-                    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000) ,
+                    expires: new Date(Date.now() + JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000) ,
                     path: "/"
                 }
                 res.cookie("jwt", token, cookie);
