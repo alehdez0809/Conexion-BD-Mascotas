@@ -18,7 +18,10 @@ var con = mysql.createConnection({
     user: metodos.MYSQLUSER,
     password: metodos.MYSQLPASSWORD,
     database: metodos.MYSQLDATABASE,
-    port: metodos.MYSQLPORT
+    port: metodos.MYSQLPORT,
+    connectTimeout: 10000, // 10 segundos
+    acquireTimeout: 10000, // 10 segundos
+    timeout: 10000
 
 });
 
