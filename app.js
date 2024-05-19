@@ -222,11 +222,13 @@ app.get('/actualizarMascota', autorizacion.soloAdmin ,(req, res) => {
                 document.getElementById('edad').value = '';
                 document.getElementById('especie').setAttribute('disabled', true);
                 document.getElementById('estado').setAttribute('disabled', true);
+                document.getElementById('botonActualizar').setAttribute('disabled', true);
             } else {
                 document.getElementById('nombre').removeAttribute('readonly');
                 document.getElementById('edad').removeAttribute('readonly');
                 document.getElementById('especie').removeAttribute('disabled');
                 document.getElementById('estado').removeAttribute('disabled');
+                document.getElementById('botonActualizar').removeAttribute('disabled');
             }
             fetch('/obtenerDatosMascota?id=' + mascotaId)
                 .then(response => response.json())
@@ -268,7 +270,7 @@ app.get('/actualizarMascota', autorizacion.soloAdmin ,(req, res) => {
         </select>
         </div>
         <br>
-        <input type="submit" value="Actualizar Mascota">
+        <input type="submit" value="Actualizar Mascota" id="botonActualizar">
     </form>
 </body>
 </html>`);
