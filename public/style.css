@@ -136,6 +136,11 @@ input[type="submit"] {
   width: 20%;
 }
 
+input[type="submit"]:disabled{
+  background-color: #a49bac;
+  cursor: not-allowed;
+}
+
 /* Contenedor principal */
 .container {
   max-width: 1200px;
