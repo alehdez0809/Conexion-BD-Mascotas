@@ -1,21 +1,19 @@
-import fetch from "node-fetch";
-
-const mensajeError = document.getElementsByClassName("error")[0];
+const mensajeError = document.getchildrenByClassName("error")[0];
 
 document.getElementById("registro-form").addEventListener("submit", async (e) => {
     e.preventDefault();
-    console.log(e.target.elements.correo.value);
+    console.log(e.target.children.correo.value);
     const res = await fetch("https://conexion-bd-mascotas.vercel.app/api/registro", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            nombre: e.target.elements.nombre.value,
-            apellidoP: e.target.elements.apellidoP.value,
-            apellidoM: e.target.elements.apellidoM.value,
-            correo: e.target.elements.correo.value,
-            contrasena: e.target.elements.contrasena.value
+            nombre: e.target.children.nombre.value,
+            apellidoP: e.target.children.apellidoP.value,
+            apellidoM: e.target.children.apellidoM.value,
+            correo: e.target.children.correo.value,
+            contrasena: e.target.children.contrasena.value
         })
     })
     if(!res.ok){

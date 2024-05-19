@@ -1,7 +1,6 @@
 import bcryptjs from "bcryptjs";
 import jsonwebtoken from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import fetch from 'node-fetch';
 
 dotenv.config();
 

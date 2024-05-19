@@ -1,6 +1,5 @@
 import jsonwebtoken from "jsonwebtoken";
 import dotenv from "dotenv";
-import fetch from "node-fetch";
 
 const JWT_SECRET = 'mi_clave_secreta_token';
 
