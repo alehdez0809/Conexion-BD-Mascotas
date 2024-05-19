@@ -10,4 +10,4 @@ export const metodos = {
     MYSQLPORT,
     MYSQLUSER,
     MYSQLDATABASE
-};
+}
