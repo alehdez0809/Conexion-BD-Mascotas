@@ -17,7 +17,7 @@ var con = mysql.createConnection({
     host: metodos.MYSQLHOST,
     user: metodos.MYSQLUSER,
     password: metodos.MYSQLPASSWORD,
-    database: metodos.MYSQLDATABASE,
+    database: metodos.MYSQL_DATABASE,
     port: metodos.MYSQLPORT
 
 });
