@@ -232,6 +232,7 @@ app.get('/actualizarMascota', autorizacion.soloAdmin, (req, res) => {
 
         window.onload = function() {
             document.getElementById('botonActualizar').disabled = true;
+            document.getElementById('mascota').addEventListener('change', cargarDatosMascota);
         }
     </script>
 </head>
@@ -330,6 +331,7 @@ app.get('/eliminarMascota', autorizacion.soloAdmin, (req, res) => {
 
         window.onload = function() {
             document.getElementById('botonEliminar').disabled = true;
+            document.getElementById('mascota').addEventListener('change', activarBotonEliminar);
         }
     </script>
 </head>
