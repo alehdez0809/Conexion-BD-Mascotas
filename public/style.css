@@ -85,6 +85,11 @@ button:hover {
   background-color: #9B72AA;
 }
 
+button:disabled{
+  background-color: #a49bac;
+  cursor: not-allowed;
+}
+
 .error{
   color: red;
 }
