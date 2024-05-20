@@ -2,8 +2,6 @@ import bcryptjs from "bcryptjs";
 import jsonwebtoken from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
-import { con } from '../app.js';
-
 dotenv.config();
 
 const JWT_SECRET = 'mi_clave_secreta_token';
@@ -17,21 +15,20 @@ async function login(req, res){
     if(!correo || !contrasena){
         return res.status(400).send({status: "Error", message: "Los campos están incompletos"});
     }else{
-        con.query('SELECT * FROM usuario WHERE correo_usuario = ?',[correo], async (error, result) => {
-            if(error){
-                return res.status(400).send({status: "Error", message: "Error al consultar a los usuarios"});
-            }
-            if(result.length === 0){
-                return res.status(400).send({status: "Error", message: "El correo no está registrado"});
-            }
-            const loginCorrecto = await bcryptjs.compare(contrasena, result[0].contrasena_usuario);
+        const response = await fetch("https://conexion-bd-mascotas.vercel.app/api/obtenerUsuarios"); 
+        const usuarios = await response.json();
+        const correoARevisar = usuarios.find(usuario => usuario.correo_usuario === correo);
+        if(!correoARevisar){
+            return res.status(400).send({status: "Error", message: "Error durante el login"});
+        }else{
+            const loginCorrecto = await bcryptjs.compare(contrasena, correoARevisar.contrasena_usuario);
             console.log(loginCorrecto);
             
             if(!loginCorrecto){
-                return res.status(400).send({status: "Error", message: "La contraseña no coincide"});
+                return res.status(400).send({status: "Error", message: "Error durante el login"});
             }else{
                 const token = jsonwebtoken.sign(
-                    {correo: result[0].correo_usuario}, 
+                    {correo:correoARevisar.correo_usuario}, 
                     JWT_SECRET,
                     {expiresIn: JWT_EXPIRA}
                 );
@@ -42,7 +39,7 @@ async function login(req, res){
                 res.cookie("jwt", token, cookie);
                 res.send({status: "ok", message: "Usuario loggeado", redirect: "/inicio"})
             }
-        })
+        }
     }
 }
 
@@ -56,22 +53,36 @@ async function registro(req, res){
     if(!nombre || !apellidoP || !apellidoM || !correo || !contrasena){
         return res.status(400).send({status: "Error", message: "Los campos están incompletos"});
     }else{
-        con.query('SELECT * FROM usuario WHERE correo_usuario = ?', [correo], async (error, result) => {
-            if(error){
-                return res.status(400).send({status: "Error", message: "Error al consultar a los usuarios"});
-            }
-            if(result.length > 0){
-                return res.status(400).send({status: "Error", message: "Este correo ya está registrado"});
-            }
+        const response = await fetch("https://conexion-bd-mascotas.vercel.app/api/obtenerUsuarios"); 
+        const usuarios = await response.json();
+        const correoARevisar = usuarios.some(usuario => usuario.correo_usuario === correo);
+        if(correoARevisar){
+            return res.status(400).send({status: "Error", message: "Este correo ya está registrado"});
+        }else{
             const salt = await bcryptjs.genSalt(5);
             const hashContrasena = await bcryptjs.hash(contrasena, salt);
-            con.query('INSERT INTO usuario (nombre_usuario, apellidop_usuario, apellidom_usuario, correo_usuario, contrasena_usuario) VALUES (?, ?, ?, ?, ?)', [nombre, apellidoP, apellidoM, correo, hashContrasena], async (error, result) => {
-                if(error){
-                    return res.status(400).send({status: "Error", message: "Error al registrar al usuario"});
-                }
-                res.send({status: "ok", message: "Usuario registrado exitosamente", redirect: "/"});
-            })
-        })
+            const nuevoUsuario = {
+                nombre: nombre, 
+                apellidoP: apellidoP, 
+                apellidoM: apellidoM, 
+                correo: correo, 
+                contrasena: hashContrasena
+            }
+            console.log(nuevoUsuario);
+            const respuesta = await fetch("https://conexion-bd-mascotas.vercel.app/api/registrarUsuario", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(nuevoUsuario)
+            });
+            if(respuesta.ok){
+                return res.status(201).send({status: "ok", message: "Usuario registrado exitosamente", redirect: '/'})
+            }else{
+                const errorData = await respuesta.json();
+                return res.status(respuesta.status).send({status: "Error", message: errorData.error});
+            }
+        }
     }
 }
 
