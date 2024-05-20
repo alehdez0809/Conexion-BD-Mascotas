@@ -13,7 +13,7 @@ let mascotasHTML;
 
 import { metodos } from "./config.js";
 
-var con = mysql.createConnection({
+const con = mysql.createConnection({
     host: metodos.MYSQLHOST,
     user: metodos.MYSQLUSER,
     password: metodos.MYSQLPASSWORD,
@@ -353,6 +353,8 @@ app.post('/procesarEliminacionMascota', (req, res) => {
         res.send(`<script>alert('Mascota eliminada con éxito'); window.location.href='/';</script>`);
     });
 });
+
+export { app, con };
 
 
 
